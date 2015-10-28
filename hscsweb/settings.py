@@ -31,12 +31,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    'django_cassandra_engine',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cardviewer',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -77,10 +79,21 @@ WSGI_APPLICATION = 'hscsweb.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django_cassandra_engine',
+        'NAME': 'cardstats',
+        'TEST_NAME': 'cardstats_test',
+        'HOST': '192.168.1.197',
+        'OPTIONS': {
+            'replication': {
+                'strategy_class': 'SimpleStrategy',
+                'replication_factor': 1
+            }
+        }
     }
 }
+
+
+
 
 
 # Internationalization
