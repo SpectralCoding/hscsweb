@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'hscsweb.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django_cassandra_engine',
-        'NAME': 'cardstats',
+        'NAME': 'hscs',
         'TEST_NAME': 'cardstats_test',
         'HOST': '192.168.1.197',
         'OPTIONS': {
