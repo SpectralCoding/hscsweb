@@ -12,3 +12,11 @@ def index(request):
 def carddata(request, request_cardid):
     cardlist = Cards.objects.filter(cardid=request_cardid)
     return HttpResponse(json.dumps(dict(cardlist[0])))
+
+def cardlist(request):
+    cardlist = list(Cards.objects.all().values_list('cardid', flat=True))
+    return HttpResponse(json.dumps(cardlist))
+
+def metriclist(request):
+    metriclist = list(dict(Cards.objects.all().limit(1)[0]).keys())
+    return HttpResponse(json.dumps(metriclist))
