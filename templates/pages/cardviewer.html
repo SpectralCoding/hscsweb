@@ -1,67 +1,8 @@
+{% load staticfiles %}
 {% include 'structure/header.html' %}
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-<script src="http://code.highcharts.com/highcharts.js"></script>
-<script>
-$(document).ready(function() {
-    $("#viewbtn").click(function(){
-        var cardname = $("#cardsel option:selected").text();
-        var metricname = $("#metricsel option:selected").text();
-        $.getJSON("/cardviewer/" + cardname + "/", function(carddata) {
-            metricdata = carddata[metricname];
-            console.log(metricdata);
-            var highest = 0;
-            for (var turn in metricdata) {
-                if (turn > highest) {
-                    highest = turn;
-                }
-            }
-            var values = [];
-            for (i = 0; i <= highest; i++) {
-                if(metricdata.hasOwnProperty(i)) {
-                    values.push(metricdata[i]);
-                } else {
-                    values.push(0);
-                }
-            }
-            $('#container').highcharts({
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: 'Column chart with negative values'
-                },
-                xAxis: {
-
-                },
-                credits: {
-                    enabled: false
-                },
-                series: [{
-                    data: values
-                }]
-            });
-        });
-    });
-    $.getJSON( "/cardviewer/cardlist", function(cardlist) {
-        cardlist.sort();
-        $.each(cardlist, function(key, value) {
-            $('#cardsel')
-                .append($("<option></option>")
-                .attr("value",key)
-                .text(value));
-        });
-    });
-    $.getJSON( "/cardviewer/metriclist", function(metriclist) {
-        metriclist.sort();
-        $.each(metriclist, function(key, value) {
-            $('#metricsel')
-                .append($("<option></option>")
-                .attr("value",key)
-                .text(value));
-        });
-    });
-});
-</script>
+<script src="{% static "js/jquery.min.js" %}"></script>
+<script src="{% static "js/highcharts.js" %}"></script>
+<script src="{% static "js/cardviewer.js" %}"></script>
 <select name="cardsel" id="cardsel"></select>
 <select name="metricsel" id="metricsel"></select>
 <button type="button" id="viewbtn">View</button><br />
